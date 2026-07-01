@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Happy Birthday Anin ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Poppins,sans-serif;background:linear-gradient(-45deg,#350000,#7b0012,#a0001a,#4a0000);background-size:400% 400%;animation:bg 14s infinite;color:#fff;overflow-x:hidden}
+@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.hidden{display:none}
+.card{max-width:700px;width:95%;background:rgba(255,255,255,.12);backdrop-filter:blur(16px);border:1px solid rgba(255,215,0,.3);border-radius:25px;padding:35px;text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.35)}
+h1{font-family:"Great Vibes";font-size:72px}
+h2{font-size:34px;margin:10px 0}
+button{margin-top:25px;padding:14px 28px;border:none;border-radius:40px;background:#ffd166;color:#600;font-weight:700;cursor:pointer}
+#loading{position:fixed;inset:0;background:#140000;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#heart{font-size:70px;animation:beat 1s infinite}
+@keyframes beat{50%{transform:scale(1.2)}}
+#letter{white-space:pre-wrap;text-align:left;line-height:1.8;min-height:280px}
+.cursor{display:inline-block;width:8px;background:#fff;animation:blink .8s infinite}
+@keyframes blink{50%{opacity:0}}
+.petal{position:fixed;top:-30px;font-size:20px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+#final h1{font-size:64px}
+#ps{opacity:0;transition:2s}
+@media(max-width:600px){h1{font-size:54px}h2{font-size:28px}.card{padding:22px}}
+</style>
+</head>
+<body>
+
+<div id="loading">
+<div id="heart">❤️</div>
+<h2>Preparing Something Special...</h2>
+<p>For Someone Who Means Everything...</p>
+</div>
+
+<audio id="music" preload="auto" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<section id="hero" class="hidden">
+<div class="card">
+<h1>Happy Birthday</h1>
+<h2>Anin ❤️</h2>
+<p>Every love story is beautiful,<br>but ours is my favorite.</p>
+<button onclick="openLetter()">🎁 Open Your Surprise</button>
+</div>
+</section>
+
+<section id="letterSection" class="hidden">
+<div class="card">
+<h2>💌 A Letter For You</h2>
+<div id="letter"></div>
+<button id="continueBtn" class="hidden" onclick="showCake()">Continue ❤️</button>
+</div>
+</section>
+
+<section id="cakeSection" class="hidden">
+<div class="card">
+<div style="font-size:90px">🎂</div>
+<h2>Make a Wish</h2>
+<button onclick="celebrate()">🕯️ Blow the Candles</button>
+</div>
+</section>
+
+<section id="final" class="hidden">
+<div class="card">
+<h1>Happy Birthday</h1>
+<h2>My Love<br>Anin ❤️</h2>
+<p>May every smile you share return to you a thousand times.<br><br>I Love You ❤️</p>
+<h3 style="margin-top:25px">— Coffee ❤️</h3>
+<p id="ps">P.S. I'd choose you, in every lifetime. ❤️</p>
+</div>
+</section>
+
+<script>
+setTimeout(()=>{loading.style.display='none';hero.classList.remove('hidden')},3000);
+
+function petals(){
+let p=document.createElement('div');
+p.className='petal';
+p.innerHTML=['🌹','❤️','✨'][Math.floor(Math.random()*3)];
+p.style.left=Math.random()*100+'vw';
+p.style.animationDuration=(5+Math.random()*6)+'s';
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),11000);
+}
+setInterval(petals,350);
+
+const msg=`Dear Anin ❤️,
+
+Happy Birthday, my love.
+
+Today is all about celebrating you—the most beautiful part of my life.
+Thank you for filling my days with happiness, love, and countless smiles.
+
+I hope this year brings you endless joy, success, good health, and every dream you've been wishing for.
+No matter what happens, I'll always be here, loving you and cheering you on.
+
+Never forget how special you are to me.
+
+Happy Birthday, my beautiful Anin. ❤️
+
+Forever Yours,
+
+Coffee ❤️`;
+
+function openLetter(){
+hero.classList.add('hidden');
+letterSection.classList.remove('hidden');
+const audio=document.getElementById("music"); audio.volume=0.6; audio.load(); audio.play().catch(e=>alert("Audio failed: "+e));
+let i=0;
+let el=document.getElementById('letter');
+let cur=document.createElement('span');cur.className='cursor';
+(function type(){
+ if(i<msg.length){el.textContent+=msg[i++];el.appendChild(cur);setTimeout(type,35);}
+ else{cur.remove();continueBtn.classList.remove('hidden');}
+})();
+}
+function showCake(){
+letterSection.classList.add('hidden');
+cakeSection.classList.remove('hidden');
+}
+function celebrate(){
+cakeSection.classList.add('hidden');
+final.classList.remove('hidden');
+let end=Date.now()+5000;
+(function frame(){
+confetti({particleCount:8,spread:70,origin:{x:0}});
+confetti({particleCount:8,spread:70,origin:{x:1}});
+if(Date.now()<end){requestAnimationFrame(frame);}
+})();
+setTimeout(()=>ps.style.opacity=1,5000);
+}
+</script>
+</body>
+</html>
